@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0f1d">
+  <title>Members Registration Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Sticky progress -->
+  <div class="progress" id="progress" aria-live="polite">
+    <div class="progress-inner">
+      <span class="progress-text" id="progressText">1 of 12 required fields completed</span>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+        <div class="bar-fill" id="barFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <header class="hero">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+      </div>
+      <h1>Premier Coding &amp; Engineering Society</h1>
+      <h2>Membership Application Form</h2>
+      <p class="lead">Fill in the details below to apply. Fields marked <span class="req">*</span> are required.</p>
+    </header>
+
+    <form id="regForm" novalidate>
+
+      <!-- ============ PERSONAL DETAILS ============ -->
+      <div class="section">
+        <span class="chip">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M10 .5a9.5 9.5 0 100 19 9.5 9.5 0 000-19zM9 5h2v2H9V5zm0 4h2v6H9V9z"/></svg>
+        </span>
+        <span class="section-title">Personal Details</span>
+        <span class="section-step">1 / 4</span>
+      </div>
+
+      <div class="field" data-field="fullName">
+        <label for="fullName">Full Name: <span class="req">*</span></label>
+        <input type="text" id="fullName" name="Full Name" autocomplete="name" placeholder="e.g. Ahmed Khan">
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="row">
+        <div class="field" data-field="dob">
+          <label for="dob">Date of Birth: <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="text" id="dob" name="Date of Birth" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" autocomplete="bday">
+            <button type="button" class="icon-btn" id="dobBtn" aria-label="Open calendar">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2v3M13 2v3"/></svg>
+            </button>
+            <input type="date" id="dobPicker" tabindex="-1" aria-hidden="true">
+          </div>
+          <p class="error" role="alert"></p>
+        </div>
+
+        <div class="field" data-field="class">
+          <label for="class">Class: <span class="req">*</span></label>
+          <input type="text" id="class" name="Class" placeholder="e.g. 9th">
+          <p class="error" role="alert"></p>
+        </div>
+      </div>
+
+      <div class="field" data-field="gender">
+        <label id="genderLabel">Gender: <span class="req">*</span></label>
+        <div class="select" id="gender" data-clearable="false" aria-labelledby="genderLabel">
+          <button type="button" class="select-control" aria-haspopup="listbox" aria-expanded="false">
+            <span class="select-value" data-placeholder="Select your gender"></span>
+            <span class="select-clear" role="button" aria-label="Clear">&times;</span>
+            <span class="divider"></span>
+            <svg class="chev" viewBox="0 0 20 20" width="18" height="18"><path fill="currentColor" d="M5.3 7.3a1 1 0 011.4 0L10 10.6l3.3-3.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4z"/></svg>
+          </button>
+          <ul class="select-menu" role="listbox">
+            <li role="option" data-value="Boy">Boy</li>
+            <li role="option" data-value="Girl">Girl</li>
+          </ul>
+        </div>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <!-- ============ CONTACT DETAILS ============ -->
+      <div class="section">
+        <span class="chip">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M10 .5a9.5 9.5 0 100 19 9.5 9.5 0 000-19zM9 5h2v2H9V5zm0 4h2v6H9V9z"/></svg>
+        </span>
+        <span class="section-title">Contact Details</span>
+        <span class="section-step">2 / 4</span>
+      </div>
+
+      <div class="field" data-field="email">
+        <label for="email">Email Address: <span class="req">*</span></label>
+        <div class="input-wrap has-left-icon">
+          <svg class="left-icon" viewBox="0 0 20 20" width="20" height="20"><path fill="currentColor" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path fill="currentColor" d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          <input type="email" id="email" name="Email Address" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field" data-field="phone">
+        <label for="phone">Phone Number: <span class="req">*</span></label>
+        <div class="phone">
+          <button type="button" class="phone-code" id="phoneCodeBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose country code">
+            <img id="phoneFlag" src="https://flagcdn.com/w40/pk.png" alt="" width="24" height="16">
+            <svg class="chev" viewBox="0 0 20 20" width="14" height="14"><path fill="currentColor" d="M5.3 7.3a1 1 0 011.4 0L10 10.6l3.3-3.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4z"/></svg>
+          </button>
+          <span class="dial" id="phoneDial">+92</span>
+          <input type="tel" id="phone" name="Phone Number" inputmode="tel" autocomplete="tel-national" placeholder="300 1234567">
+          <div class="phone-pop" id="phonePop">
+            <input type="text" class="phone-search" id="phoneSearch" placeholder="Search country or code" autocomplete="off">
+            <ul class="phone-menu" id="phoneMenu" role="listbox"></ul>
+          </div>
+        </div>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field" data-field="discord">
+        <label for="discord">Discord Username: <span class="req">*</span></label>
+        <p class="hint">If you don't have a Discord account, go over to: <a href="https://discord.com" target="_blank" rel="noopener">https://discord.com</a><br>and sign up.</p>
+        <input type="text" id="discord" name="Discord Username" autocomplete="off" placeholder="username">
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field" data-field="slack">
+        <label for="slack">Hack Club Slack ID:</label>
+        <p class="hint">(Required only if you are an existing Hack Club member)</p>
+        <input type="text" id="slack" name="Hack Club Slack ID" autocomplete="off" placeholder="e.g. U01ABC2DEF3">
+        <p class="error" role="alert"></p>
+      </div>
+
+      <!-- ============ EXPERIENCE DETAILS ============ -->
+      <div class="section">
+        <span class="chip">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M10 .5a9.5 9.5 0 100 19 9.5 9.5 0 000-19zM9 5h2v2H9V5zm0 4h2v6H9V9z"/></svg>
+        </span>
+        <span class="section-title">Experience Details</span>
+        <span class="section-step">3 / 4</span>
+      </div>
+
+      <div class="field" data-field="experience">
+        <label id="expLabel">Do you have any coding experience? <span class="req">*</span></label>
+        <div class="select" id="experience" data-clearable="true" data-default="Yes" aria-labelledby="expLabel">
+          <button type="button" class="select-control" aria-haspopup="listbox" aria-expanded="false">
+            <span class="select-value" data-placeholder="Select an option"></span>
+            <span class="select-clear" role="button" aria-label="Clear">&times;</span>
+            <span class="divider"></span>
+            <svg class="chev" viewBox="0 0 20 20" width="18" height="18"><path fill="currentColor" d="M5.3 7.3a1 1 0 011.4 0L10 10.6l3.3-3.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4z"/></svg>
+          </button>
+          <ul class="select-menu" role="listbox">
+            <li role="option" data-value="Yes">Yes</li>
+            <li role="option" data-value="No">No</li>
+          </ul>
+        </div>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div id="experienceExtra">
+        <div class="field" data-field="languages">
+          <label for="languages">Programming Languages <span class="req">*</span></label>
+          <input type="text" id="languages" name="Programming Languages" placeholder="e.g. Python, JavaScript, C++">
+          <p class="error" role="alert"></p>
+        </div>
+
+        <div class="field" data-field="rating">
+          <label id="ratingLabel">How would you rate your coding experience? (1&ndash;5): <span class="req">*</span></label>
+          <div class="stars-row">
+            <div class="stars" id="stars" role="radiogroup" aria-labelledby="ratingLabel"></div>
+            <span class="rating-text" id="ratingText"></span>
+          </div>
+          <p class="error" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ============ OTHER DETAILS ============ -->
+      <div class="section">
+        <span class="chip">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M10 .5a9.5 9.5 0 100 19 9.5 9.5 0 000-19zM9 5h2v2H9V5zm0 4h2v6H9V9z"/></svg>
+        </span>
+        <span class="section-title">Other Details</span>
+        <span class="section-step">4 / 4</span>
+      </div>
+
+      <div class="field" data-field="skills">
+        <label for="skills" class="plain">Do you have any skills that could help the club?</label>
+        <input type="text" id="skills" name="Skills That Could Help the Club" placeholder="Graphic Design, Social Media Management, Video Editing etc.">
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field check" data-field="confirm">
+        <label class="checkbox">
+          <input type="checkbox" id="confirm" name="Information Confirmed Accurate">
+          <span class="box"></span>
+          <span class="check-text">I confirm that all information provided is accurate. <span class="req">*</span></span>
+        </label>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field check" data-field="conduct">
+        <label class="checkbox">
+          <input type="checkbox" id="conduct" name="Agreed To Code Of Conduct">
+          <span class="box"></span>
+          <span class="check-text">I agree to follow the club&rsquo;s and school's code of conduct. <span class="req">*</span></span>
+        </label>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <!-- honeypot (spam trap) -->
+      <input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+
+      <p class="form-error" id="formError" role="alert"></p>
+
+      <button type="submit" class="submit" id="submitBtn">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="submit-label">Submit</span>
+      </button>
+    </form>
+
+    <!-- ============ THANK YOU SCREEN ============ -->
+    <section class="thanks" id="thanks" hidden>
+      <div class="thanks-icon">
+        <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" class="tick"/></svg>
+      </div>
+      <h2>Application Submitted</h2>
+      <p class="thanks-sub">Thank you, <strong id="thanksName"></strong>. We have received your application to the Premier Coding &amp; Engineering Society.</p>
+      <p class="thanks-note">We will contact you on <strong id="thanksEmail"></strong> once it has been reviewed.</p>
+      <button type="button" class="ghost" id="againBtn">Submit another response</button>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
