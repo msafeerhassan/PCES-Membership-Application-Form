@@ -15,7 +15,12 @@
 const CONFIG = {
   WEB3FORMS_ACCESS_KEY: '7003d792-0841-4100-94ca-991c947cbb15',
   RECIPIENT_EMAIL: 'official.pces@gmail.com',
-  EMAIL_SUBJECT: 'New PCES Membership Application'
+  EMAIL_SUBJECT: 'New PCES Membership Application',
+
+  // Database (Supabase). The publishable key is designed to be public;
+  // what it can do is limited by the security rules in supabase.sql.
+  SUPABASE_URL: 'https://gwbotqxpkqqpblgccktb.supabase.co',
+  SUPABASE_KEY: 'sb_publishable_f-JvJOINx3iV2GUZ05pm4w_zGeTRCA-'
 };
 
 /* =====================================================
@@ -539,6 +544,48 @@ async function sendEmail(fields, replyTo) {
 }
 
 /* =====================================================
+   Saving to the database (Supabase)
+   ===================================================== */
+async function saveToSupabase(row) {
+  const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/applications`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': CONFIG.SUPABASE_KEY,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(row)
+  });
+  if (!res.ok) {
+    let detail = '';
+    try { detail = (await res.json()).message || ''; } catch (_) { /* no body */ }
+    throw new Error(detail || `Database responded with status ${res.status}.`);
+  }
+}
+
+/**
+ * Save to the database AND send the backup email, in parallel.
+ * The application counts as received if at least one of them worked.
+ */
+async function deliver(fields, row) {
+  const jobs = [];
+  if (CONFIG.SUPABASE_URL && CONFIG.SUPABASE_KEY) jobs.push(['database', saveToSupabase(row)]);
+  if (CONFIG.WEB3FORMS_ACCESS_KEY || CONFIG.RECIPIENT_EMAIL) jobs.push(['email', sendEmail(fields, row.email)]);
+
+  if (!jobs.length) {
+    const err = new Error('NOT_CONFIGURED');
+    err.code = 'NOT_CONFIGURED';
+    throw err;
+  }
+
+  const results = await Promise.allSettled(jobs.map(j => j[1]));
+  results.forEach((r, i) => {
+    if (r.status === 'rejected') console.warn(`${jobs[i][0]} delivery failed:`, r.reason);
+  });
+  if (!results.some(r => r.status === 'fulfilled')) throw results[0].reason;
+}
+
+/* =====================================================
    Submit
    ===================================================== */
 const form = $('#regForm');
@@ -596,14 +643,33 @@ form.addEventListener('submit', async e => {
     'Programming Languages': hasExp ? val('languages') : 'N/A',
     'Coding Experience Rating (1-5)': hasExp ? `${rating} (${RATING_LABELS[rating]})` : 'N/A',
     'Skills That Could Help The Club': val('skills') || 'N/A',
+    'Laptop/Computer At Home': $('#computer').checked ? 'Yes' : 'No',
     'Confirmed Information Accurate': 'Yes',
     'Agreed To Code Of Conduct': 'Yes'
+  };
+
+  // Same data, shaped for the database table (see supabase.sql)
+  const [dd, mm, yyyy] = val('dob').split('/');
+  const row = {
+    full_name: val('fullName'),
+    dob: `${yyyy}-${mm}-${dd}`,
+    class_name: val('class'),
+    gender: genderSelect.value,
+    email: val('email'),
+    phone: `${phoneState.code} ${val('phone')}`,
+    discord: val('discord'),
+    slack_id: val('slack') || null,
+    has_experience: hasExp,
+    languages: hasExp ? val('languages') : null,
+    rating: hasExp ? rating : null,
+    skills: val('skills') || null,
+    has_computer: $('#computer').checked
   };
 
   setLoading(true);
 
   try {
-    await sendEmail(fields, val('email'));
+    await deliver(fields, row);
 
     $('#thanksName').textContent = val('fullName').split(/\s+/)[0];
     $('#thanksEmail').textContent = val('email');

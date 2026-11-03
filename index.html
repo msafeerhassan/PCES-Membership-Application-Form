@@ -26,9 +26,7 @@
   <main class="container">
 
     <header class="hero">
-      <div class="logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
-      </div>
+      <img class="logo" src="logo.png" alt="PCES logo" width="185" height="113">
       <h1>Premier Coding &amp; Engineering Society</h1>
       <h2>Membership Application Form</h2>
       <p class="lead">Fill in the details below to apply. Fields marked <span class="req">*</span> are required.</p>
@@ -209,6 +207,15 @@
           <input type="checkbox" id="conduct" name="Agreed To Code Of Conduct">
           <span class="box"></span>
           <span class="check-text">I agree to follow the club&rsquo;s and school's code of conduct. <span class="req">*</span></span>
+        </label>
+        <p class="error" role="alert"></p>
+      </div>
+
+      <div class="field check" data-field="computer">
+        <label class="checkbox">
+          <input type="checkbox" id="computer" name="Has Laptop Or Computer At Home">
+          <span class="box"></span>
+          <span class="check-text">I have a laptop or computer available at home for attending online sessions and working on projects.</span>
         </label>
         <p class="error" role="alert"></p>
       </div>
